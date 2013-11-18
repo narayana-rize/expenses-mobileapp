@@ -2,9 +2,10 @@
 <html>
   <head>
     <title>Notification Example</title>
-
+	<link href="css/style.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/jquery.validate.js"></script>
     <script type="text/javascript" charset="utf-8">
 
     // Wait for Cordova to load
@@ -32,37 +33,60 @@
             'Done'                  // buttonName
         );
     }
+        $('#login_frm').validate({});
         //validate login page
         function fnAdminLogin(obj){
             if($('#uname').val() == ''){
-                navigator.notification.alert('Please enter username',alertDismissed,'Alert','Ok');
+                navigator.notification.alert('Please enter Username',alertDismissed,'Alert','Ok');
                 $('#uname').focus();
                 return false;
             }
-            showAlert('passed');
-            return fasle;
+            if($('#pwd').val() == ''){
+                navigator.notification.alert('Please enter Password',alertDismissed,'Alert','Ok');
+                $('#pwd').focus();
+                return false;
+            }
         }
 
     </script>
   </head>
   <body>
-    <!-- <p><a href="#" onclick="showAlert(); return false;">Show Alert</a></p> -->
-      <p>
-          &nbsp;
-      </p>
-    <form onsubmit="javascript: return fnAdminLogin(this);" method="post" name="adminLoginFrm" action="">
+    <p><a href="#" onclick="showAlert('Hey, I am here!'); return false;">Show Alert</a></p>
+    <p>
+        &nbsp;
+      </p>  
+          <h1>
+              Expenses
+      </h1>
+      <div style="background:#FFF; width:80%;" align="center">
+          <div id="logindiv">
+              
+              <div>
+                  Username
+              </div>
+              <div>
+                  <input type="text" name="uname">
+              </div>
+              <div style="clear:both;">
+                  
+              </div>
+          </div>
+          
+      </div>
+      
+    <form  method="post" name="adminLoginFrm" id="login_frm" action="">
 			<table width="100%" cellspacing="0" cellpadding="0" border="0">
 								<tbody><tr>
 					<td width="4%" height="30">&nbsp;</td>
 					<td width="43%" align="right"><span style="float:right;" class="field_label">User Name</span></td>
 					<td width="2%" align="center">:</td>
-				  <td width="51%" align="left"><input type="text" tabindex="1" maxlength="100" value="" class="textboxcls" id="uname" name="login[uname]"></td>
+				  <td width="51%" align="left"><input type="text" tabindex="1" maxlength="100" value="" class="textboxcls required" id="uname" name="login[uname]"></td>
 				</tr>
 				<tr>
 					<td height="30">&nbsp;</td>
 					<td align="right"><span style="float:right;" class="field_label">Password</span></td>
 					<td align="center">:</td>
-					<td align="left"><input type="password" tabindex="2" maxlength="100" value="" class="textboxcls" id="pwd" name="login[pwd]"></td>
+					<td align="left"><input type="password" tabindex="2" maxlength="100" value="" class="textboxcls required" id="pwd" name="login[pwd]"></td>
 				</tr>
 				<tr>
 					<td height="30">&nbsp;</td>
