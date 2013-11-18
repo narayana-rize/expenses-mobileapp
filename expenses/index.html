@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Notification Example</title>
+    <title>Expenses - Login</title>
 	<link href="css/style.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/jquery-1.10.2.min.js"></script>
@@ -33,9 +33,9 @@
             'Done'                  // buttonName
         );
     }
-        $('#login_frm').validate({});
+        //$('#login_frm').validate({});
         //validate login page
-        function fnAdminLogin(obj){
+        function fnAdminLogin(){
             if($('#uname').val() == ''){
                 navigator.notification.alert('Please enter Username',alertDismissed,'Alert','Ok');
                 $('#uname').focus();
@@ -46,35 +46,41 @@
                 $('#pwd').focus();
                 return false;
             }
+            //send ajax request
+            var values = $('#login_frm').serialize();
+            $.ajax({
+                url:"http://expenses.zwe.in/ws/chklogin.php",
+                type: "post",
+                data: values,
+                dataType: "jsonp",
+            	crossDomain: true,
+                success: function(resp){
+                    navigator.notification.alert(resp,alertDismissed,'Alert','Ok');
+                    return;
+                    //$("#result").html('Submitted successfully');
+                },
+                error:function(){
+                    navigator.notification.alert('failure',alertDismissed,'Alert','Ok');
+                    return;
+                    //$("#result").html('There is error while submit');
+                }
+            });
+            return false;
         }
 
     </script>
   </head>
   <body>
-    <p><a href="#" onclick="showAlert('Hey, I am here!'); return false;">Show Alert</a></p>
+    <!-- <p><a href="#" onclick="showAlert('Hey, I am here!'); return false;">Show Alert</a></p> -->
     <p>
         &nbsp;
       </p>  
           <h1>
               Expenses
       </h1>
-      <div style="background:#FFF; width:80%;" align="center">
-          <div id="logindiv">
-              
-              <div>
-                  Username
-              </div>
-              <div>
-                  <input type="text" name="uname">
-              </div>
-              <div style="clear:both;">
-                  
-              </div>
-          </div>
-          
-      </div>
       
-    <form  method="post" name="adminLoginFrm" id="login_frm" action="">
+      
+      <form  method="post" name="adminLoginFrm" id="login_frm" action="" onSubmit="javascript: return fnAdminLogin();">
 			<table width="100%" cellspacing="0" cellpadding="0" border="0">
 								<tbody><tr>
 					<td width="4%" height="30">&nbsp;</td>
