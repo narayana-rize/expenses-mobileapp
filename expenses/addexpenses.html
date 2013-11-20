@@ -3,9 +3,10 @@
   <head>
     <title>Expenses - Login</title>
 	<link href="css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.css" />
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/jquery.validate.js"></script>
+    <script src="js/jquery-ui-1.10.3.js"></script>
     <script type="text/javascript" charset="utf-8">
 
     // Wait for Cordova to load
@@ -56,7 +57,7 @@
                 crossDomain: true,
                 success: function(resp){
                     if(resp.msg != 'Success'){
-                        navigator.notification.alert(resp.msg,alertDismissed,'Alert','Ok');
+                        navigator.notification.alert(resp.uname,alertDismissed,'Alert','Ok');
                     	return;
                     }
                     window.location.href = 'addexpenses.html';
@@ -83,28 +84,52 @@
       </h1>
       
       
-      <form  method="post" name="adminLoginFrm" id="login_frm" action="" onSubmit="javascript: return fnAdminLogin();">
-			<table width="100%" cellspacing="0" cellpadding="0" border="0">
-								<tbody><tr>
-					<td width="4%" height="30">&nbsp;</td>
-					<td width="43%" align="right"><span style="float:right;" class="field_label">User Name</span></td>
-					<td width="2%" align="center">:</td>
-				  <td width="51%" align="left"><input type="text" tabindex="1" maxlength="100" value="" class="textboxcls required" id="uname" name="login[uname]"></td>
-				</tr>
-				<tr>
-					<td height="30">&nbsp;</td>
-					<td align="right"><span style="float:right;" class="field_label">Password</span></td>
-					<td align="center">:</td>
-					<td align="left"><input type="password" tabindex="2" maxlength="100" value="" class="textboxcls required" id="pwd" name="login[pwd]"></td>
-				</tr>
-				<tr>
-					<td height="30">&nbsp;</td>
-					<td align="center">&nbsp;&nbsp;</td>
-				    <td align="center">&nbsp;</td>
-				    <td align="left"><input type="submit" tabindex="3" value="Login" id="login" class="buttoncls" name="submit"></td>
-				</tr>
-			</tbody></table>
-			</form>
+      <form name="addUsrFrm" method="post" action="" onSubmit="javascript: return fnAddExpDet(this);" enctype="multipart/form-data">
+		<input type="hidden" name="hAct" id="hAct" value="">
+		<table width="100%" cellpadding="0" cellspacing="0"  style="border:1px solid #CCCCCC;">
+			
+				
+			
+			<tr><td width="6%">&nbsp;</td>
+				<td width="29%" height="30" align="right"><span class="field_label" style="float:right;">Details</span></td>
+				<td width="3%" align="center">:</td>
+				<td width="58%" align="left"><input type="text" name="adminuser[exp_detail]" id="exp_detail" class="textboxcls" value="" /></td>
+				<td width="4%">&nbsp;</td>
+			</tr>
+			<tr>
+			  <td>&nbsp;</td>
+			  <td height="30" align="right">Date</td>
+			  <td align="center">:</td>
+			  <td align="left">
+              
+              <input type="date" class="exp_date textboxcls" name="adminuser[exp_date]" id="exp_date" value=""  /></td>
+			  <td>&nbsp;</td>
+		  </tr>
+			<tr>
+			  <td>&nbsp;</td>
+			  <td height="30" align="right">Amount</td>
+			  <td align="center">:</td>
+			  <td align="left" ><input type="text" name="adminuser[exp_amount]" id="exp_amount" class="textboxcls" value="" /></td>
+			  <td>&nbsp;</td>
+		  </tr>
+			
+			
+			<tr><td colspan="5">&nbsp;</td></tr>
+		  
+		  
+		  
+			<tr><td>&nbsp;</td>
+				<td height="30" align="right">&nbsp;</td>
+				<td colspan="2" align="left"><input type="submit" name="adduser" id="adduser" class="buttoncls" value="Add Expense" />&nbsp;<input type="reset" class="buttoncls"/></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr><td colspan="5">&nbsp;</td></tr>
+		</table>
+		</form>
      
   </body>
 </html>
+<script>
+	
+    //$('.exp_date').datepicker({dateFormat: 'dd/mm/yyyy'});
+</script>
