@@ -36,32 +36,40 @@
     }
         //$('#login_frm').validate({});
         //validate login page
-        function fnAdminLogin(){
-            if($('#uname').val() == ''){
-                navigator.notification.alert('Please enter Username',alertDismissed,'Alert','Ok');
+        function fnAddExpDet(){
+            
+            if($('#exp_detail').val() == ''){
+                navigator.notification.alert('Please enter Details',alertDismissed,'Alert','Ok');
                 $('#uname').focus();
                 return false;
             }
-            if($('#pwd').val() == ''){
-                navigator.notification.alert('Please enter Password',alertDismissed,'Alert','Ok');
+            if($('#exp_date').val() == ''){
+                navigator.notification.alert('Please enter Date',alertDismissed,'Alert','Ok');
                 $('#pwd').focus();
                 return false;
             }
+            if($('#exp_amount').val() == ''){
+                navigator.notification.alert('Please enter Amount',alertDismissed,'Alert','Ok');
+                $('#pwd').focus();
+                return false;
+            }
+            
             //send ajax request
-            var values = $('#login_frm').serialize();
+            var values = $('#addUsrFrm').serialize();
             $.ajax({
-                url:"http://expenses.zwe.in/ws/chklogin.php",
+                url:"http://expenses.zwe.in/ws/addexpenses.php",
                 type: "POST",
                 data: values,
                 dataType: "jsonp",
                 crossDomain: true,
                 success: function(resp){
                     if(resp.msg != 'Success'){
-                        navigator.notification.alert(resp.uname,alertDismissed,'Alert','Ok');
+                        navigator.notification.alert(resp.msg,alertDismissed,'Alert','Ok');
                     	return;
                     }
-                    window.location.href = 'addexpenses.html';
-                    //$("#result").html('Submitted successfully');
+                    navigator.notification.alert("Details recorded Successfully",alertDismissed,'Alert','Ok');
+                    window.location.reload();
+                   
                 },
                 error:function(){
                     navigator.notification.alert('failure',alertDismissed,'Alert','Ok');
@@ -71,6 +79,8 @@
             });
             return false;
         }
+        
+        
 
     </script>
   </head>
@@ -84,7 +94,7 @@
       </h1>
       
       
-      <form name="addUsrFrm" method="post" action="" onSubmit="javascript: return fnAddExpDet(this);" enctype="multipart/form-data">
+      <form name="addUsrFrm" id="addUsrFrm" method="post" action="" onSubmit="javascript: return fnAddExpDet(this);" enctype="multipart/form-data">
 		<input type="hidden" name="hAct" id="hAct" value="">
 		<table width="100%" cellpadding="0" cellspacing="0"  style="border:1px solid #CCCCCC;">
 			
@@ -109,7 +119,7 @@
 			  <td>&nbsp;</td>
 			  <td height="30" align="right">Amount</td>
 			  <td align="center">:</td>
-			  <td align="left" ><input type="text" name="adminuser[exp_amount]" id="exp_amount" class="textboxcls" value="" /></td>
+			  <td align="left" ><input type="text" pattern="[0-9]*" name="adminuser[exp_amount]" id="exp_amount" class="textboxcls" value="" /></td>
 			  <td>&nbsp;</td>
 		  </tr>
 			
